@@ -36,7 +36,7 @@ jobs:
     - run: reportgenerator -reports:./output.cobertura.xml -targetdir:"." -reporttypes:Clover -assemblyfilters:-Humanizer
     - uses: paambaati/codeclimate-action@v3.2.0
       env:
-        CC_TEST_REPORTER_ID: ## add code climate coverage ID here
+        CC_TEST_REPORTER_ID: 5acf7fbf37c3efb04193fcb894eb6c28a0a40810fed9dbafd58821224851cfd0
       with:
         coverageLocations: ${{github.workspace}}/Clover.xml:clover
   analyze:
