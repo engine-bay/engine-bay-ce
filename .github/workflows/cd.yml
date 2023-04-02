@@ -4,7 +4,10 @@ on:
   push:
     tags:
       - '*'
-
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
 jobs:
   publish:
     runs-on: ubuntu-latest
