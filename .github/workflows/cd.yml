@@ -24,10 +24,8 @@ jobs:
       uses: docker/metadata-action@v4
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-    - uses: canastro/copy-file-action@master
-      with:
-        source: ".editorconfig"
-        target: "EngineBay.CommunityEdition/.editorConfig"
+    - name: Copy .editorconfig
+      run: cp ./.editorconfig ./EngineBay.CommunityEdition/.editorconfig
     - name: Build and push image
       uses: docker/build-push-action@v4
       with:
