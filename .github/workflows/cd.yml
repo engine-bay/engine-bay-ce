@@ -7,7 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -24,6 +24,8 @@ jobs:
       uses: docker/metadata-action@v4
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+    - name: Copy .editorconfig
+      run: cp ./.editorConfig ./EngineBay.CommunityEdition/.editorConfig
     - name: Build and push image
       uses: docker/build-push-action@v4
       with:
