@@ -27,7 +27,7 @@
   <ItemGroup>
     <PackageReference Include="EngineBay.ActorEngine" Version="0.6.3" />
     <PackageReference Include="EngineBay.ApiDocumentation" Version="0.2.5" />
-    <PackageReference Include="EngineBay.DatabaseManagement" Version="0.2.1" />
+    <PackageReference Include="EngineBay.DatabaseManagement" Version="1.0.1" />
     <PackageReference Include="EngineBay.Cors" Version="0.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -37,12 +37,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SeedData\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

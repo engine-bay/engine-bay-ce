@@ -34,10 +34,9 @@ namespace EngineBay.CommunityEdition
             using var scope = app.Services.CreateScope();
             var serviceProvider = scope.ServiceProvider;
             var dbInitialiser = serviceProvider.GetRequiredService<DbInitialiser>(); // todo this should probably be refactored into the EngineBay.DatabaseManagement module
-            var seedFilePaths = new List<string>();
-            seedFilePaths.Add(@"SeedData/maths-workbooks.json");
 
-            dbInitialiser.Run(seedFilePaths);
+            dbInitialiser.Run();
+
             app.Run();
         }
     }

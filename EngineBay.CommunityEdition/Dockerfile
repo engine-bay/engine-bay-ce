@@ -18,4 +18,5 @@ COPY --from=base /tmp/build/out /usr/local/sbin
 
 EXPOSE 5050
 ENV ASPNETCORE_URLS=http://*:5050
+RUN mkdir /seed-data
 ENTRYPOINT ["EngineBay.CommunityEdition"]
