@@ -30,13 +30,6 @@ namespace EngineBay.CommunityEdition
 
             app.AddModuleMiddleware();
 
-            // Seed the database
-            using var scope = app.Services.CreateScope();
-            var serviceProvider = scope.ServiceProvider;
-            var dbInitialiser = serviceProvider.GetRequiredService<DbInitialiser>(); // todo this should probably be refactored into the EngineBay.DatabaseManagement module
-
-            dbInitialiser.Run();
-
             app.Run();
         }
     }
