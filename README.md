@@ -10,6 +10,7 @@ This is the community edition of EngineBay.
 ## Related packages
 
 * [EngineBay.Core](https://github.com/engine-bay/core)
+* [EngineBay.DataProtection](https://github.com/engine-bay/data-protection)
 * [EngineBay.Persistence](https://github.com/engine-bay/persistence)
 * [EngineBay.DatabaseManagement](https://github.com/engine-bay/database-management)
 * [EngineBay.SheetFunctions](https://github.com/engine-bay/sheet-functions)
@@ -20,3 +21,5 @@ This is the community edition of EngineBay.
 * [EngineBay.Logging](https://github.com/engine-bay/logging)
 * [EngineBay.ApiDocumentation](https://github.com/engine-bay/api-documentation)
 * [EngineBay.Authentication](https://github.com/engine-bay/authentication)
+* [EngineBay.AdminPortal](https://github.com/engine-bay/admin-portal)
+* [EngineBay.DocumentationPortal](https://github.com/engine-bay/documentation-portal)

@@ -1,7 +1,5 @@
 namespace EngineBay.CommunityEdition
 {
-    using EngineBay.DatabaseManagement;
-
     public class Program
     {
         private static void Main(string[] args)
@@ -29,6 +27,8 @@ namespace EngineBay.CommunityEdition
             app.UseStaticFiles();
 
             app.AddModuleMiddleware();
+
+            app.InitializeDatabase();
 
             app.Run();
         }

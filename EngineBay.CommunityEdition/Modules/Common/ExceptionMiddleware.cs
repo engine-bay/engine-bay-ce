@@ -37,7 +37,7 @@ namespace EngineBay.CommunityEdition
                             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                             title = "Internal Server Error";
                             type = HttpStatusCode.InternalServerError.ToString();
-                            messages.Add("An unhandled error occured. See logs for more details."); // we purposefull omit the details here so as to not over expose inner system workings.
+                            messages.Add("An unhandled error occurred. See logs for more details."); // we purposefull omit the details here so as to not over expose inner system workings.
                             break;
                     }
 
