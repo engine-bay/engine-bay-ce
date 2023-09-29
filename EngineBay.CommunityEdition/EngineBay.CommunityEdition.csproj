@@ -25,13 +25,24 @@
     <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(Configuration)=='Debug'">
+    <ProjectReference Include="../../admin-portal/EngineBay.AdminPortal/EngineBay.AdminPortal.csproj" />
+    <ProjectReference Include="../../documentation-portal/EngineBay.DocumentationPortal/EngineBay.DocumentationPortal.csproj" />
+    <ProjectReference Include="../../actor-engine/EngineBay.ActorEngine/EngineBay.ActorEngine.csproj" />
+    <ProjectReference Include="../../api-documentation/EngineBay.ApiDocumentation/EngineBay.ApiDocumentation.csproj" />
+    <ProjectReference Include="../../database-management/EngineBay.DatabaseManagement/EngineBay.DatabaseManagement.csproj" />
+    <ProjectReference Include="../../cors/EngineBay.Cors/EngineBay.Cors.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration)!='Debug'">
     <PackageReference Include="EngineBay.AdminPortal" Version="1.0.0" />
     <PackageReference Include="EngineBay.DocumentationPortal" Version="1.0.0" />
     <PackageReference Include="EngineBay.ActorEngine" Version="2.0.1" />
     <PackageReference Include="EngineBay.ApiDocumentation" Version="1.0.0" />
     <PackageReference Include="EngineBay.DatabaseManagement" Version="3.0.0" />
     <PackageReference Include="EngineBay.Cors" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
