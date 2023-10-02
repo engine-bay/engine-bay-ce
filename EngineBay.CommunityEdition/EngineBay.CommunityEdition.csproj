@@ -25,7 +25,7 @@
     <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(Configuration)=='Debug'">
+  <ItemGroup Condition="$(Configuration)=='Dev'">
     <ProjectReference Include="../../admin-portal/EngineBay.AdminPortal/EngineBay.AdminPortal.csproj" />
     <ProjectReference Include="../../documentation-portal/EngineBay.DocumentationPortal/EngineBay.DocumentationPortal.csproj" />
     <ProjectReference Include="../../actor-engine/EngineBay.ActorEngine/EngineBay.ActorEngine.csproj" />
@@ -33,7 +33,7 @@
     <ProjectReference Include="../../database-management/EngineBay.DatabaseManagement/EngineBay.DatabaseManagement.csproj" />
     <ProjectReference Include="../../cors/EngineBay.Cors/EngineBay.Cors.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="$(Configuration)!='Debug'">
+  <ItemGroup Condition="$(Configuration)!='Dev'">
     <PackageReference Include="EngineBay.AdminPortal" Version="1.0.0" />
     <PackageReference Include="EngineBay.DocumentationPortal" Version="1.0.0" />
     <PackageReference Include="EngineBay.ActorEngine" Version="2.0.1" />
