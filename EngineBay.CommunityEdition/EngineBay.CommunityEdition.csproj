@@ -21,7 +21,6 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <IsTrimmable>false</IsTrimmable>
         <PublishTrimmed>false</PublishTrimmed>
-        <PublishReadyToRun>true</PublishReadyToRun>
         <ServerGarbageCollection>false</ServerGarbageCollection>
     </PropertyGroup>
 
