@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
+namespace EngineBay.CommunityEdition.Migrations.MasterDb.PostgresMigrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -15,12 +15,12 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "ApplicationUsers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Username = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: true),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,18 +28,37 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuditEntries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EntityName = table.Column<string>(type: "text", nullable: false),
+                    ActionType = table.Column<string>(type: "text", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ApplicationUserName = table.Column<string>(type: "text", nullable: false),
+                    EntityId = table.Column<string>(type: "text", nullable: false),
+                    Changes = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditEntries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DataVariableStates",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Identity = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SessionId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: true),
-                    Type = table.Column<string>(type: "TEXT", nullable: true),
-                    EncryptedValue = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Identity = table.Column<Guid>(type: "uuid", nullable: false),
+                    SessionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    Type = table.Column<string>(type: "text", nullable: true),
+                    EncryptedValue = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,12 +69,12 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "SessionLogs",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SessionId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EncryptedMessage = table.Column<string>(type: "TEXT", nullable: false),
-                    LogLevel = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    SessionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EncryptedMessage = table.Column<string>(type: "text", nullable: false),
+                    LogLevel = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,41 +82,17 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuditEntries",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EntityName = table.Column<string>(type: "TEXT", nullable: false),
-                    ActionType = table.Column<string>(type: "TEXT", nullable: false),
-                    ApplicationUserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EntityId = table.Column<string>(type: "TEXT", nullable: false),
-                    Changes = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditEntries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AuditEntries_ApplicationUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "ApplicationUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BasicAuthCredentials",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ApplicationUserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Salt = table.Column<string>(type: "TEXT", nullable: true),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: true),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Salt = table.Column<string>(type: "text", nullable: true),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,13 +109,13 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "Workbooks",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -143,14 +138,14 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "Blueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    WorkbookId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    WorkbookId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,15 +173,15 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "DataTableBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    BlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Namespace = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    BlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,17 +209,17 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "DataVariableBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    DefaultValue = table.Column<string>(type: "TEXT", nullable: true),
-                    BlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Namespace = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    DefaultValue = table.Column<string>(type: "text", nullable: true),
+                    BlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,15 +247,15 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "TriggerBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    OutputDataVariableBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    BlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    OutputDataVariableBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    BlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,14 +283,14 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "DataTableColumnBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    DataTableBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    DataTableBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -313,7 +308,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DataTableColumnBlueprints_DataTableBlueprints_DataTableBlueprintId",
+                        name: "FK_DataTableColumnBlueprints_DataTableBlueprints_DataTableBlue~",
                         column: x => x.DataTableBlueprintId,
                         principalTable: "DataTableBlueprints",
                         principalColumn: "Id");
@@ -323,12 +318,12 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "DataTableRowBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DataTableBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DataTableBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -346,7 +341,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DataTableRowBlueprints_DataTableBlueprints_DataTableBlueprintId",
+                        name: "FK_DataTableRowBlueprints_DataTableBlueprints_DataTableBluepri~",
                         column: x => x.DataTableBlueprintId,
                         principalTable: "DataTableBlueprints",
                         principalColumn: "Id");
@@ -356,16 +351,16 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "OutputDataVariableBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    ExpressionBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    TriggerBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Namespace = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    ExpressionBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TriggerBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -377,13 +372,13 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OutputDataVariableBlueprints_ApplicationUsers_LastUpdatedById",
+                        name: "FK_OutputDataVariableBlueprints_ApplicationUsers_LastUpdatedBy~",
                         column: x => x.LastUpdatedById,
                         principalTable: "ApplicationUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OutputDataVariableBlueprints_TriggerBlueprints_TriggerBlueprintId",
+                        name: "FK_OutputDataVariableBlueprints_TriggerBlueprints_TriggerBluep~",
                         column: x => x.TriggerBlueprintId,
                         principalTable: "TriggerBlueprints",
                         principalColumn: "Id");
@@ -393,15 +388,15 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "TriggerExpressionBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Expression = table.Column<string>(type: "TEXT", nullable: false),
-                    Objective = table.Column<string>(type: "TEXT", nullable: true),
-                    TriggerBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    InputDataVariableBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Expression = table.Column<string>(type: "text", nullable: false),
+                    Objective = table.Column<string>(type: "text", nullable: true),
+                    TriggerBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    InputDataVariableBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -419,7 +414,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TriggerExpressionBlueprints_TriggerBlueprints_TriggerBlueprintId",
+                        name: "FK_TriggerExpressionBlueprints_TriggerBlueprints_TriggerBluepr~",
                         column: x => x.TriggerBlueprintId,
                         principalTable: "TriggerBlueprints",
                         principalColumn: "Id");
@@ -429,16 +424,16 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "DataTableCellBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Key = table.Column<string>(type: "TEXT", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: false),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    DataTableRowBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    Namespace = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    DataTableRowBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -456,7 +451,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DataTableCellBlueprints_DataTableRowBlueprints_DataTableRowBlueprintId",
+                        name: "FK_DataTableCellBlueprints_DataTableRowBlueprints_DataTableRow~",
                         column: x => x.DataTableRowBlueprintId,
                         principalTable: "DataTableRowBlueprints",
                         principalColumn: "Id");
@@ -466,15 +461,15 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "ExpressionBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Expression = table.Column<string>(type: "TEXT", nullable: false),
-                    Objective = table.Column<string>(type: "TEXT", nullable: true),
-                    BlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    OutputDataVariableBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Expression = table.Column<string>(type: "text", nullable: false),
+                    Objective = table.Column<string>(type: "text", nullable: true),
+                    BlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    OutputDataVariableBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -497,7 +492,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalTable: "Blueprints",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ExpressionBlueprints_OutputDataVariableBlueprints_OutputDataVariableBlueprintId",
+                        name: "FK_ExpressionBlueprints_OutputDataVariableBlueprints_OutputDat~",
                         column: x => x.OutputDataVariableBlueprintId,
                         principalTable: "OutputDataVariableBlueprints",
                         principalColumn: "Id");
@@ -507,14 +502,14 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "InputDataTableBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: false),
-                    ExpressionBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Namespace = table.Column<string>(type: "text", nullable: false),
+                    ExpressionBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -532,7 +527,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_InputDataTableBlueprints_ExpressionBlueprints_ExpressionBlueprintId",
+                        name: "FK_InputDataTableBlueprints_ExpressionBlueprints_ExpressionBlu~",
                         column: x => x.ExpressionBlueprintId,
                         principalTable: "ExpressionBlueprints",
                         principalColumn: "Id");
@@ -542,17 +537,17 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 name: "InputDataVariableBlueprints",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Namespace = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    ExpressionBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    DataTableBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    TriggerExpressionBlueprintId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LastUpdatedById = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Namespace = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    ExpressionBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DataTableBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TriggerExpressionBlueprintId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastUpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -570,17 +565,17 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_InputDataVariableBlueprints_DataTableBlueprints_DataTableBlueprintId",
+                        name: "FK_InputDataVariableBlueprints_DataTableBlueprints_DataTableBl~",
                         column: x => x.DataTableBlueprintId,
                         principalTable: "DataTableBlueprints",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_InputDataVariableBlueprints_ExpressionBlueprints_ExpressionBlueprintId",
+                        name: "FK_InputDataVariableBlueprints_ExpressionBlueprints_Expression~",
                         column: x => x.ExpressionBlueprintId,
                         principalTable: "ExpressionBlueprints",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_InputDataVariableBlueprints_TriggerExpressionBlueprints_TriggerExpressionBlueprintId",
+                        name: "FK_InputDataVariableBlueprints_TriggerExpressionBlueprints_Tri~",
                         column: x => x.TriggerExpressionBlueprintId,
                         principalTable: "TriggerExpressionBlueprints",
                         principalColumn: "Id");
@@ -591,11 +586,6 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 table: "ApplicationUsers",
                 column: "Username",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuditEntries_ApplicationUserId",
-                table: "AuditEntries",
-                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BasicAuthCredentials_ApplicationUserId",
@@ -775,7 +765,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 column: "LastUpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InputDataTableBlueprints_Name_Namespace_ExpressionBlueprintId",
+                name: "IX_InputDataTableBlueprints_Name_Namespace_ExpressionBlueprint~",
                 table: "InputDataTableBlueprints",
                 columns: new[] { "Name", "Namespace", "ExpressionBlueprintId" },
                 unique: true);
@@ -817,7 +807,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 column: "LastUpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OutputDataVariableBlueprints_Name_ExpressionBlueprintId_TriggerBlueprintId_Namespace",
+                name: "IX_OutputDataVariableBlueprints_Name_ExpressionBlueprintId_Tri~",
                 table: "OutputDataVariableBlueprints",
                 columns: new[] { "Name", "ExpressionBlueprintId", "TriggerBlueprintId", "Namespace" },
                 unique: true);
@@ -854,7 +844,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 column: "LastUpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TriggerBlueprints_Name_BlueprintId_OutputDataVariableBlueprintId",
+                name: "IX_TriggerBlueprints_Name_BlueprintId_OutputDataVariableBluepr~",
                 table: "TriggerBlueprints",
                 columns: new[] { "Name", "BlueprintId", "OutputDataVariableBlueprintId" },
                 unique: true);
@@ -865,7 +855,7 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.SqliteMigrations
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TriggerExpressionBlueprints_Expression_TriggerBlueprintId_InputDataVariableBlueprintId",
+                name: "IX_TriggerExpressionBlueprints_Expression_TriggerBlueprintId_I~",
                 table: "TriggerExpressionBlueprints",
                 columns: new[] { "Expression", "TriggerBlueprintId", "InputDataVariableBlueprintId" },
                 unique: true);

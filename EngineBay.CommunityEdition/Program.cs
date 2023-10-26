@@ -7,6 +7,7 @@ namespace EngineBay.CommunityEdition
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddProblemDetails();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.RegisterModules(builder.Configuration);
 
