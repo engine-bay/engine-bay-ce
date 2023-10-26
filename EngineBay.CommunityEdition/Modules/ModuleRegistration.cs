@@ -5,6 +5,7 @@ namespace EngineBay.CommunityEdition
     using EngineBay.AdminPortal;
     using EngineBay.APIConfiguration;
     using EngineBay.ApiDocumentation;
+    using EngineBay.Auditing;
     using EngineBay.Authentication;
     using EngineBay.Blueprints;
     using EngineBay.Core;
@@ -99,6 +100,7 @@ namespace EngineBay.CommunityEdition
             modules.Add(new APIConfigurationModule());
             modules.Add(new AdminPortalModule());
             modules.Add(new DocumentationPortalModule());
+            modules.Add(new AuditingModule());
 
             Console.WriteLine($"Discovered {modules.Count} EngineBay modules");
             return modules;

@@ -10,6 +10,8 @@ namespace EngineBay.CommunityEdition
 
             builder.Services.RegisterModules(builder.Configuration);
 
+            builder.Services.AddHttpContextAccessor();
+
             var app = builder.Build();
 
             app.UseExceptionHandler();
