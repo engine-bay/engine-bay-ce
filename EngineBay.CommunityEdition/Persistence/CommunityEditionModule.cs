@@ -9,7 +9,7 @@ namespace EngineBay.CommunityEdition
         public override IServiceCollection RegisterModule(IServiceCollection services, IConfiguration configuration)
         {
             // Register database schema management and initialization
-            builder.Services.AddTransient<DbInitialiser>();
+            services.AddTransient<DbInitialiser>();
 
             // register technology specific services for migrations
             var masterSqliteDbConfiguration = new DatabaseConfiguration<MasterSqliteDb>();
