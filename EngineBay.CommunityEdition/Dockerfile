@@ -14,9 +14,11 @@ RUN dotnet publish ./EngineBay.CommunityEdition.csproj --nologo --runtime linux-
 
 # build runtime image
 FROM mcr.microsoft.com/dotnet/runtime-deps:7.0-alpine
+RUN apk add icu-libs
 COPY --from=base /tmp/build/out /usr/local/sbin
 
 EXPOSE 5050
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 ENV ASPNETCORE_URLS=http://*:5050
 RUN mkdir /seed-data
 ENTRYPOINT ["EngineBay.CommunityEdition"]
