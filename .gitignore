@@ -9,6 +9,7 @@ secrets/**/*
 
 # SQLite databases
 *.db*
+*.sqlite*
 
 
 # Code coverage
