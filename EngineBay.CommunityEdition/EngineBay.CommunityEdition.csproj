@@ -21,7 +21,6 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <IsTrimmable>false</IsTrimmable>
         <PublishTrimmed>false</PublishTrimmed>
-        <PublishReadyToRun>true</PublishReadyToRun>
         <ServerGarbageCollection>false</ServerGarbageCollection>
     </PropertyGroup>
 
@@ -30,6 +29,8 @@
             <ItemGroup>
                 <ProjectReference
                     Include="../../admin-portal/EngineBay.AdminPortal/EngineBay.AdminPortal.csproj" />
+                <ProjectReference
+                    Include="../../auditing/EngineBay.Auditing/EngineBay.Auditing.csproj" />
                 <ProjectReference
                     Include="../../documentation-portal/EngineBay.DocumentationPortal/EngineBay.DocumentationPortal.csproj" />
                 <ProjectReference
@@ -44,10 +45,11 @@
         <Otherwise>
             <ItemGroup>
                 <PackageReference Include="EngineBay.AdminPortal" Version="1.0.0" />
+                <PackageReference Include="EngineBay.Auditing" Version="0.0.2" />
                 <PackageReference Include="EngineBay.DocumentationPortal" Version="1.0.0" />
-                <PackageReference Include="EngineBay.ActorEngine" Version="2.0.1" />
+                <PackageReference Include="EngineBay.ActorEngine" Version="2.0.2" />
                 <PackageReference Include="EngineBay.ApiDocumentation" Version="1.0.0" />
-                <PackageReference Include="EngineBay.DatabaseManagement" Version="3.0.0" />
+                <PackageReference Include="EngineBay.DatabaseManagement" Version="4.0.0" />
                 <PackageReference Include="EngineBay.Cors" Version="1.0.0" />
             </ItemGroup>
         </Otherwise>

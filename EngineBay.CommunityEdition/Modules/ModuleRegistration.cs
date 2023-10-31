@@ -14,6 +14,7 @@ namespace EngineBay.CommunityEdition
     using EngineBay.DocumentationPortal;
     using EngineBay.Logging;
     using EngineBay.Persistence;
+    using Microsoft.EntityFrameworkCore;
 
     public static class ModuleRegistration
     {
@@ -85,12 +86,26 @@ namespace EngineBay.CommunityEdition
             return app;
         }
 
+        public static IReadOnlyCollection<IModuleDbContext> GetRegisteredDbContexts(DbContextOptions<ModuleWriteDbContext> dbOptions)
+        {
+            var dbContexts = new List<IModuleDbContext>
+            {
+                new ActorEngineDbContext(dbOptions),
+                new BlueprintsDbContext(dbOptions),
+                new AuthenticationDbContext(dbOptions),
+                new AuditingDbContext(dbOptions),
+            };
+
+            return dbContexts;
+        }
+
         private static IEnumerable<IModule> GetRegisteredModules()
         {
             var modules = new List<IModule>();
 
             modules.Add(new PersistenceModule());
             modules.Add(new DatabaseManagementModule());
+            modules.Add(new CommunityEditionModule());
             modules.Add(new BlueprintsModule());
             modules.Add(new ActorEngineModule());
             modules.Add(new ApiDocumentationModule());
