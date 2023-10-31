@@ -49,7 +49,7 @@
                 <PackageReference Include="EngineBay.DocumentationPortal" Version="1.0.0" />
                 <PackageReference Include="EngineBay.ActorEngine" Version="2.0.2" />
                 <PackageReference Include="EngineBay.ApiDocumentation" Version="1.0.0" />
-                <PackageReference Include="EngineBay.DatabaseManagement" Version="3.0.0" />
+                <PackageReference Include="EngineBay.DatabaseManagement" Version="4.0.0" />
                 <PackageReference Include="EngineBay.Cors" Version="1.0.0" />
             </ItemGroup>
         </Otherwise>
