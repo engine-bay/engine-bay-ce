@@ -88,13 +88,14 @@ namespace EngineBay.CommunityEdition
 
         public static IReadOnlyCollection<IModuleDbContext> GetRegisteredDbContexts(DbContextOptions<ModuleWriteDbContext> dbOptions)
         {
-            var dbContexts = new List<IModuleDbContext>
+            var dbContexts = new List<IModuleDbContext>();
+            foreach (var module in RegisteredModules)
             {
-                new ActorEngineDbContext(dbOptions),
-                new BlueprintsDbContext(dbOptions),
-                new AuthenticationDbContext(dbOptions),
-                new AuditingDbContext(dbOptions),
-            };
+                if (module is IDatabaseModule)
+                {
+                    dbContexts.AddRange(((IDatabaseModule)module).GetRegisteredDbContexts(dbOptions));
+                }
+            }
 
             return dbContexts;
         }
