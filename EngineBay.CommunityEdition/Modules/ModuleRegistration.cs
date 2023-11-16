@@ -18,11 +18,9 @@ namespace EngineBay.CommunityEdition
 
     public static class ModuleRegistration
     {
-        private static readonly List<IModule> RegisteredModules = new List<IModule>();
-
         public static IServiceCollection RegisterPolicies(this IServiceCollection services)
         {
-            foreach (var module in RegisteredModules)
+            foreach (var module in GetRegisteredModules())
             {
                 module.RegisterPolicies(services);
             }
@@ -32,11 +30,9 @@ namespace EngineBay.CommunityEdition
 
         public static IServiceCollection RegisterModules(this IServiceCollection services, IConfiguration configuration)
         {
-            var modules = GetRegisteredModules();
-            foreach (var module in modules)
+            foreach (var module in GetRegisteredModules())
             {
                 module.RegisterModule(services, configuration);
-                RegisteredModules.Add(module);
             }
 
             return services;
@@ -47,7 +43,7 @@ namespace EngineBay.CommunityEdition
             var basePath = BaseApiConfiguration.GetBasePath();
             var versionNumber = BaseApiConfiguration.VersionNumber;
 
-            foreach (var module in RegisteredModules)
+            foreach (var module in GetRegisteredModules())
             {
                 var routeGroupBuilder = app.MapGroup($"{basePath}/{versionNumber}");
 
@@ -59,7 +55,7 @@ namespace EngineBay.CommunityEdition
 
         public static WebApplication AddModuleMiddleware(this WebApplication app)
         {
-            foreach (var module in RegisteredModules)
+            foreach (var module in GetRegisteredModules())
             {
                 module.AddMiddleware(app);
             }
@@ -79,7 +75,7 @@ namespace EngineBay.CommunityEdition
             var serviceProvider = scope.ServiceProvider;
             var dbInitialiser = serviceProvider.GetRequiredService<DbInitialiser>();
 
-            dbInitialiser.Run(RegisteredModules);
+            dbInitialiser.Run(GetRegisteredModules());
 
             scope.Dispose();
 
@@ -88,34 +84,41 @@ namespace EngineBay.CommunityEdition
 
         public static IReadOnlyCollection<IModuleDbContext> GetRegisteredDbContexts(DbContextOptions<ModuleWriteDbContext> dbOptions)
         {
-            var dbContexts = new List<IModuleDbContext>
+            var dbContexts = new List<IModuleDbContext>();
+            foreach (var module in GetRegisteredModules())
             {
-                new ActorEngineDbContext(dbOptions),
-                new BlueprintsDbContext(dbOptions),
-                new AuthenticationDbContext(dbOptions),
-                new AuditingDbContext(dbOptions),
-            };
+                if (module is IDatabaseModule)
+                {
+                    dbContexts.AddRange(((IDatabaseModule)module).GetRegisteredDbContexts(dbOptions));
+                }
+            }
+
+            foreach (IModuleDbContext context in dbContexts)
+            {
+                Console.WriteLine($"Registering DB Context - {context.GetType().Name}");
+            }
 
             return dbContexts;
         }
 
         private static IEnumerable<IModule> GetRegisteredModules()
         {
-            var modules = new List<IModule>();
-
-            modules.Add(new PersistenceModule());
-            modules.Add(new DatabaseManagementModule());
-            modules.Add(new CommunityEditionModule());
-            modules.Add(new BlueprintsModule());
-            modules.Add(new ActorEngineModule());
-            modules.Add(new ApiDocumentationModule());
-            modules.Add(new LoggingModule());
-            modules.Add(new CorsModule());
-            modules.Add(new AuthenticationModule());
-            modules.Add(new APIConfigurationModule());
-            modules.Add(new AdminPortalModule());
-            modules.Add(new DocumentationPortalModule());
-            modules.Add(new AuditingModule());
+            var modules = new List<IModule>()
+            {
+                new PersistenceModule(),
+                new DatabaseManagementModule(),
+                new CommunityEditionModule(),
+                new BlueprintsModule(),
+                new ActorEngineModule(),
+                new ApiDocumentationModule(),
+                new LoggingModule(),
+                new CorsModule(),
+                new AuthenticationModule(),
+                new APIConfigurationModule(),
+                new AdminPortalModule(),
+                new DocumentationPortalModule(),
+                new AuditingModule(),
+            };
 
             Console.WriteLine($"Discovered {modules.Count} EngineBay modules");
             return modules;
