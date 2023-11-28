@@ -27,8 +27,6 @@ namespace EngineBay.CommunityEdition
             // Register health endpoint
             app.MapHealthChecks("/health");
 
-            app.UseStaticFiles();
-
             app.AddModuleMiddleware();
 
             app.InitializeDatabase();
