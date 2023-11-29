@@ -1,6 +1,7 @@
 namespace EngineBay.CommunityEdition
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using EngineBay.ActorEngine;
     using EngineBay.AdminPortal;
     using EngineBay.APIConfiguration;
@@ -65,10 +66,7 @@ namespace EngineBay.CommunityEdition
 
         public static WebApplication InitializeDatabase(this WebApplication app)
         {
-            if (app is null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
+            ArgumentNullException.ThrowIfNull(app);
 
             // Seed the database
             using var scope = app.Services.CreateScope();
@@ -101,7 +99,7 @@ namespace EngineBay.CommunityEdition
             return dbContexts;
         }
 
-        private static IEnumerable<IModule> GetRegisteredModules()
+        private static ReadOnlyCollection<IModule> GetRegisteredModules()
         {
             var modules = new List<IModule>()
             {
@@ -113,15 +111,14 @@ namespace EngineBay.CommunityEdition
                 new ApiDocumentationModule(),
                 new LoggingModule(),
                 new CorsModule(),
-                new AuthenticationModule(),
-                new APIConfigurationModule(),
                 new AdminPortalModule(),
                 new DocumentationPortalModule(),
+                new AuthenticationModule(),
                 new AuditingModule(),
             };
 
             Console.WriteLine($"Discovered {modules.Count} EngineBay modules");
-            return modules;
+            return new ReadOnlyCollection<IModule>(modules);
         }
     }
 }
