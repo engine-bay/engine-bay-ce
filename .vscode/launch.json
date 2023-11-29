@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/EngineBay.CommunityEdition/bin/Debug/net7.0/EngineBay.CommunityEdition.dll",
+      "program": "${workspaceFolder}/EngineBay.CommunityEdition/bin/Debug/net8.0/EngineBay.CommunityEdition.dll",
       "args": [],
       "cwd": "${workspaceFolder}/EngineBay.CommunityEdition",
       "stopAtEntry": false,
