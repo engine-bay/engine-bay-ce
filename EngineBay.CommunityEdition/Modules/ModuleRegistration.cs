@@ -104,17 +104,17 @@ namespace EngineBay.CommunityEdition
             var modules = new List<IModule>()
             {
                 new PersistenceModule(),
-                new CommunityEditionModule(),
                 new DatabaseManagementModule(),
+                new CommunityEditionModule(),
                 new BlueprintsModule(),
                 new ActorEngineModule(),
+                new ApiDocumentationModule(),
                 new LoggingModule(),
                 new CorsModule(),
-                new AuditingModule(),
-                new ApiDocumentationModule(),
                 new AdminPortalModule(),
                 new DocumentationPortalModule(),
                 new AuthenticationModule(),
+                new AuditingModule(),
             };
 
             Console.WriteLine($"Discovered {modules.Count} EngineBay modules");
