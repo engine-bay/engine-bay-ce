@@ -99,7 +99,7 @@ namespace EngineBay.CommunityEdition
             return dbContexts;
         }
 
-        private static List<IModule> GetRegisteredModules()
+        private static ReadOnlyCollection<IModule> GetRegisteredModules()
         {
             var modules = new List<IModule>()
             {
@@ -118,7 +118,7 @@ namespace EngineBay.CommunityEdition
             };
 
             Console.WriteLine($"Discovered {modules.Count} EngineBay modules");
-            return new List<IModule>(modules);
+            return new ReadOnlyCollection<IModule>(modules);
         }
     }
 }
