@@ -175,6 +175,24 @@ namespace EngineBay.CommunityEdition.Migrations.MasterDb.PostgresMigrations
                 name: "IX_GroupRole_RolesId",
                 table: "GroupRole",
                 column: "RolesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_Name",
+                table: "Groups",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_Name",
+                table: "Permissions",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roles_Name",
+                table: "Roles",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />
