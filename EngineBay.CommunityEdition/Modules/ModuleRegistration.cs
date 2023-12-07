@@ -80,7 +80,8 @@ namespace EngineBay.CommunityEdition
             return app;
         }
 
-        public static IReadOnlyCollection<IModuleDbContext> GetRegisteredDbContexts(DbContextOptions<ModuleWriteDbContext> dbOptions)
+        public static IReadOnlyCollection<IModuleDbContext> GetRegisteredDbContexts(
+            DbContextOptions<ModuleWriteDbContext> dbOptions)
         {
             var dbContexts = new List<IModuleDbContext>();
             foreach (var module in GetRegisteredModules())
