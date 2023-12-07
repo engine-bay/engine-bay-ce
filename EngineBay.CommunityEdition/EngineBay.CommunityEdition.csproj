@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -48,7 +48,7 @@
                 <PackageReference Include="EngineBay.Auditing" Version="1.0.4" />
                 <PackageReference Include="EngineBay.DocumentationPortal" Version="2.0.2" />
                 <PackageReference Include="EngineBay.ActorEngine" Version="3.0.3" />
-                <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.3" />
+                <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.4" />
                 <PackageReference Include="EngineBay.DatabaseManagement" Version="5.0.2" />
                 <PackageReference Include="EngineBay.Cors" Version="2.0.1" />
             </ItemGroup>
