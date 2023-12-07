@@ -44,13 +44,13 @@
         </When>
         <Otherwise>
             <ItemGroup>
-                <PackageReference Include="EngineBay.AdminPortal" Version="2.0.0" />
-                <PackageReference Include="EngineBay.Auditing" Version="1.0.1" />
-                <PackageReference Include="EngineBay.DocumentationPortal" Version="2.0.1" />
-                <PackageReference Include="EngineBay.ActorEngine" Version="3.0.1" />
-                <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.1" />
-                <PackageReference Include="EngineBay.DatabaseManagement" Version="5.0.1" />
-                <PackageReference Include="EngineBay.Cors" Version="2.0.0" />
+                <PackageReference Include="EngineBay.AdminPortal" Version="2.0.3" />
+                <PackageReference Include="EngineBay.Auditing" Version="1.0.4" />
+                <PackageReference Include="EngineBay.DocumentationPortal" Version="2.0.2" />
+                <PackageReference Include="EngineBay.ActorEngine" Version="3.0.3" />
+                <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.3" />
+                <PackageReference Include="EngineBay.DatabaseManagement" Version="5.0.2" />
+                <PackageReference Include="EngineBay.Cors" Version="2.0.1" />
             </ItemGroup>
         </Otherwise>
     </Choose>
