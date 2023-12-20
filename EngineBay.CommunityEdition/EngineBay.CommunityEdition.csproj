@@ -28,35 +28,38 @@
         <When Condition="'$(ASPNETCORE_ENVIRONMENT)' == 'Development'">
             <ItemGroup>
                 <ProjectReference
-                    Include="../../admin-portal/EngineBay.AdminPortal/EngineBay.AdminPortal.csproj" />
-                <ProjectReference
-                    Include="../../auditing/EngineBay.Auditing/EngineBay.Auditing.csproj" />
-                <ProjectReference
-                    Include="../../documentation-portal/EngineBay.DocumentationPortal/EngineBay.DocumentationPortal.csproj" />
-                <ProjectReference
                     Include="../../actor-engine/EngineBay.ActorEngine/EngineBay.ActorEngine.csproj" />
+                <ProjectReference
+                    Include="../../admin-portal/EngineBay.AdminPortal/EngineBay.AdminPortal.csproj" />
                 <ProjectReference
                     Include="../../api-documentation/EngineBay.ApiDocumentation/EngineBay.ApiDocumentation.csproj" />
                 <ProjectReference
-                    Include="../../database-management/EngineBay.DatabaseManagement/EngineBay.DatabaseManagement.csproj" />
+                    Include="../../auditing/EngineBay.Auditing/EngineBay.Auditing.csproj" />
+                <ProjectReference
+                    Include="../../authentication/EngineBay.Authentication/EngineBay.Authentication.csproj" />
                 <ProjectReference Include="../../cors/EngineBay.Cors/EngineBay.Cors.csproj" />
+                <ProjectReference
+                    Include="../../documentation-portal/EngineBay.DocumentationPortal/EngineBay.DocumentationPortal.csproj" />
+                <ProjectReference
+                    Include="../../database-management/EngineBay.DatabaseManagement/EngineBay.DatabaseManagement.csproj" />
             </ItemGroup>
         </When>
         <Otherwise>
             <ItemGroup>
-                <PackageReference Include="EngineBay.AdminPortal" Version="2.0.3" />
-                <PackageReference Include="EngineBay.Auditing" Version="1.0.4" />
-                <PackageReference Include="EngineBay.DocumentationPortal" Version="2.0.2" />
-                <PackageReference Include="EngineBay.ActorEngine" Version="3.0.3" />
-                <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.4" />
-                <PackageReference Include="EngineBay.DatabaseManagement" Version="5.0.2" />
-                <PackageReference Include="EngineBay.Cors" Version="2.0.1" />
+                <PackageReference Include="EngineBay.ActorEngine" Version="3.0.5" />
+                <PackageReference Include="EngineBay.AdminPortal" Version="2.0.4" />
+                <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.5" />
+                <PackageReference Include="EngineBay.Authentication" Version="2.2.1" />
+                <PackageReference Include="EngineBay.Auditing" Version="1.0.7" />
+                <PackageReference Include="EngineBay.Cors" Version="2.0.2" />
+                <PackageReference Include="EngineBay.DocumentationPortal" Version="2.0.4" />
+                <PackageReference Include="EngineBay.DatabaseManagement" Version="5.0.3" />
             </ItemGroup>
         </Otherwise>
     </Choose>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
