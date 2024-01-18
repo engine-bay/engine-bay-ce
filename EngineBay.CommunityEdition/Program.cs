@@ -10,6 +10,7 @@ namespace EngineBay.CommunityEdition
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.RegisterModules(builder.Configuration);
+            builder.Services.RegisterPolicies();
 
             builder.Services.AddHttpContextAccessor();
 
