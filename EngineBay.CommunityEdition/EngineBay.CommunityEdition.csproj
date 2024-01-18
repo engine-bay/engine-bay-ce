@@ -53,7 +53,7 @@
         <Otherwise>
             <ItemGroup>
                 <PackageReference Include="EngineBay.Core" Version="10.0.0" />
-                <PackageReference Include="EngineBay.Persistence" Version="7.0.1" />
+                <PackageReference Include="EngineBay.Persistence" Version="7.0.2" />
                 <PackageReference Include="EngineBay.ActorEngine" Version="3.0.9" />
                 <PackageReference Include="EngineBay.AdminPortal" Version="2.0.5" />
                 <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.6" />
