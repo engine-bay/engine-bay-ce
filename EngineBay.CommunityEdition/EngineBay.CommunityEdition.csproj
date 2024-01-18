@@ -57,7 +57,7 @@
                 <PackageReference Include="EngineBay.ActorEngine" Version="3.0.9" />
                 <PackageReference Include="EngineBay.AdminPortal" Version="2.0.5" />
                 <PackageReference Include="EngineBay.ApiDocumentation" Version="2.0.6" />
-                <PackageReference Include="EngineBay.Authentication" Version="2.2.2" />
+                <PackageReference Include="EngineBay.Authentication" Version="2.2.4" />
                 <PackageReference Include="EngineBay.Auditing" Version="1.0.12" />
                 <PackageReference Include="EngineBay.Cors" Version="2.0.3" />
                 <PackageReference Include="EngineBay.DocumentationPortal" Version="2.0.5" />
