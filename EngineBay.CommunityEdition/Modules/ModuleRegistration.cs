@@ -81,14 +81,14 @@ namespace EngineBay.CommunityEdition
         }
 
         public static IReadOnlyCollection<IModuleDbContext> GetRegisteredDbContexts(
-            DbContextOptions<ModuleWriteDbContext> dbOptions)
+            IDbContextOptionsFactory dbContextOptionsFactory)
         {
             var dbContexts = new List<IModuleDbContext>();
             foreach (var module in GetRegisteredModules())
             {
                 if (module is IDatabaseModule)
                 {
-                    dbContexts.AddRange(((IDatabaseModule)module).GetRegisteredDbContexts(dbOptions));
+                    dbContexts.AddRange(((IDatabaseModule)module).GetRegisteredDbContexts(dbContextOptionsFactory));
                 }
             }
 
